@@ -1,0 +1,58 @@
+#!/bin/bash
+pwd=${0%%config*}
+configFile="./nimbula.conf"
+
+function set_env()
+{
+    SAVEDIFS=$IFS
+    IFS='='
+
+    while read NAME VALUE;do
+        #VALUE=$(echo $VALUE |tr 'A-Z' 'a-z')
+        case $NAME in
+        \#*)
+            ;; #ignore comments
+        stPool)
+                stPool=$VALUE
+                ;;
+        stServer)
+                stServer=$VALUE
+                ;;
+        stProperty)
+                stProperty=$VALUE
+                ;;
+        stVolume)
+                stVolume=$VALUE
+                ;;
+        api)
+                api=$VALUE
+                ;;
+        apiClient)
+                apiClient=$VALUE
+                ;;
+        user)
+                user=$VALUE
+                ;;
+        passwd)
+                passwd=$VALUE
+                ;;
+        passFile)
+                passFile=$VALUE
+                ;;
+        storage_address)
+                storage_address=$VALUE
+                ;;
+        nfs_share)
+                nfs_share=$VALUE
+                ;;
+        imagelist)
+                imagelist=$VALUE
+                ;;
+        esac
+    done < $configFile
+    IFS=$SAVEDIFS
+    echo $passwd > $passFile
+    chmod 750 $passFile
+}
+
+set_env
