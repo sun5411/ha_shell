@@ -1,12 +1,10 @@
-###Create a new repository on the command line
-touch README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin git@github.com:sun5411/ha_shell.git
-git push -u origin master
+
+cases : test cases dir
+lib : shell script dir
+py : python script dir
 
 
-###Push an existing repository from the command line
-git remote add origin git@github.com:sun5411/ha_shell.git
-git push -u origin master
+How to run:
+# cd cases
+# ./addBootVolumeKillRabbitmq.sh 2>&1 |tee -a ../log/addBootVolumeKillRabbitmq.log
+

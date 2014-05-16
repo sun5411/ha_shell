@@ -19,10 +19,10 @@ def getPid_node():
     return (node,pid)
 
 (node_before,pid_before) = getPid_node()
-print "Before kill, %s pid is %s"%(service,operation.ingreen(pid_before))
+print "%s pid is %s"%(service,operation.ingreen(pid_before))
 operation.killSer(node_before,pid_before)
 
-time.sleep(50)
+time.sleep(60)
 
 (node_after,pid_after) = getPid_node()
 

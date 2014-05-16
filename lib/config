@@ -1,6 +1,6 @@
 #!/bin/bash
 pwd=${0%%config*}
-configFile="./nimbula.conf"
+configFile="nimbula.conf"
 
 function set_env()
 {

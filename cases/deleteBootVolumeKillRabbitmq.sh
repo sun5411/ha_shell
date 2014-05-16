@@ -1,31 +1,33 @@
 #!/bin/bash
-pwd=${0%%deleteBootVolumeKillRabbitmq*}
-libpath="${pwd}../lib"
-pypath="${pwd}../py"
+sys_path=$(pwd)
+case_path=${0%%deleteBootVolumeKillRabbitmq*}
+libpath="${sys_path}/${case_path}../lib"
+pypath="${sys_path}/${case_path}../py"
 . $libpath/common_func.sh
-#cd ${pwd}.. && . ./config &&cd $pwd_save
-cd $libpath && . ./function.sh && cd $libpath/../cases
+cd $libpath && . ./function.sh
 
 run create_storage_env
-
 for ((i=0;i<10;i++));do
-    run create_boot_storage_volume ${stVolume}_boot_${i}
+    create_boot_storage_volume ${stVolume}_boot_${i}
 done
 
 for ((i=0;i<10;i++));do
-    run check_storage_volume_online ${stVolume}_boot_${i}
+    check_storage_volume_online ${stVolume}_boot_${i}
 done
 
 
 #delete bootVolume 
+echo_yellow "$(date +%Y%m%d-%H%M%S) , Start to delete Boot storage_volume..."
 for ((i=0;i<10;i++));do
-    run delete_storage_volume ${stVolume}_boot_${i}
+    delete_storage_volume ${stVolume}_boot_${i}
 done
-$pypath/getpid_kill_service.py rabbitmq_1 &
+echo_yellow "$(date +%Y%m%d-%H%M%S) , delete Boot storage_volume requests done !"
+
+run $pypath/getpid_kill_service.py rabbitmq_1 &
 
 #check if bootVolumes are deleted
 for ((i=0;i<10;i++));do
-    run check_storage_volume_delete_status ${stVolume}_boot_${i}
+    check_storage_volume_delete_status ${stVolume}_boot_${i}
 done
 
 run clean_storage_env

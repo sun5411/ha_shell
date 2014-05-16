@@ -1,5 +1,5 @@
 #!/bin/bash
-cd .. && . ./config && . lib/common_func.sh && cd -
+. ./config && . ./common_func.sh
 
 auto_login_ssh () {
    expect -c "set timeout -1;
@@ -105,7 +105,7 @@ function delete_storage_volume()
 }
 
 # $0 volume_number
-function delete_storage_volumes()
+function delete_created_storage_volumes()
 {
     [[ "$1" = "" ]] && echo_red "Please using : delete_storage_volumes volumes_number" && exit
     volNum = $1
@@ -146,7 +146,7 @@ function create_boot_storage_volume()
 {
     [[ "$1" = "" ]] && echo_red "Please using : create_boot_storage_volume volumes_name" && exit
     volume_name=$1
-    cmd="$apiClient -a $api -u $user -p $passFile add storagevolume $volume_name 1G $stProperty --tags volumeTag1 -f json"
+    cmd="$apiClient -a $api -u $user -p $passFile add storagevolume $volume_name 8G $stProperty --tags volumeTag1 -f json"
     echo "$cmd"
     $cmd &
 }
@@ -200,3 +200,14 @@ clean_storage_env()
     delete_storage_server
 }
 
+delete_all_volumes()
+{
+    volumes=`$apiClient -a $api -u $user -p $passFile list storagevolume / -Fname,status |grep Online |awk '{print $1}'`
+    if [ "$volumes" != "" ];then
+        echo -e "Will delete Volumes :  \n $volumes"
+        for volume in $volumes;do
+            delete_storage_volume $volume
+            check_storage_volume_delete_status $volume
+        done
+    fi
+}

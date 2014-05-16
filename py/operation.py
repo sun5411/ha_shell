@@ -2,7 +2,7 @@
 import paramiko
 import pdb
 import json
-import os,sys
+import os,sys,time
 import string
 
 getendpoint="nimbula-admin -u /root/root -p /tmp/nimbulaPasswdFile_root_root list node / -Fendpoint"
@@ -112,4 +112,5 @@ def getPid(host,service):
 def killSer(host,pid):
     cmd="echo %s|sudo -S kill -9 %s"%(passwd,pid)
     ssh.connect(hostname=host,username=user,password=passwd)
+    print "Node/Pid : %s/%s , Kill service time : %s "%(host,pid,inyellow(time.strftime('%Y%m%d-%H%M%S')))
     stdin,stdout,stderr = ssh.exec_command("%s\n" %cmd)

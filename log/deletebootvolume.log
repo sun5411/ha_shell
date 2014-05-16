@@ -1,0 +1,507 @@
+[1;34m-------------------------Function create_storage_env start-------------------------------[0m
+[/root/shell/lib]#create_storage_env
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add property storage /oracle/ha_storage_prop1_auto automation_added_prop -f json
+{
+ "list": [
+  {
+   "description": "automation_added_prop", 
+   "name": "/oracle/ha_storage_prop1_auto", 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/property/storage/oracle/ha_storage_prop1_auto"
+  }
+ ]
+}
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list property storage /oracle/ha_storage_prop1_auto
+uri	name	description
+https://api.scalability.nimbula/federation/nimbula/scalability/property/storage/oracle/ha_storage_prop1_auto	/oracle/ha_storage_prop1_auto	automation_added_prop
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storageserver /haStorageServerAutomation 192.6.64.254 192.6.64.254 nfs -f json
+{
+ "list": [
+  {
+   "status": "Online", 
+   "vendor": "", 
+   "addresses": [
+    "192.6.64.254"
+   ], 
+   "name": "/haStorageServerAutomation", 
+   "management_address_type": "ip", 
+   "enabled": true, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/server/haStorageServerAutomation", 
+   "status_detail": "Server is alive based on IP ping.", 
+   "server_model": "", 
+   "status_timestamp": "2014-05-16T03:01:22Z", 
+   "protocol_types": [
+    "nfs"
+   ], 
+   "address_type": "ip", 
+   "management_addresses": [
+    "192.6.64.254"
+   ], 
+   "description": ""
+  }
+ ]
+}
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storageserver /haStorageServerAutomation -Fname,status
+name	status
+/haStorageServerAutomation	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagepool /oracle/storagePoolAutomation /haStorageServerAutomation /oracle/ha_storage_prop1_auto "nfs" '{ "nfs_share":"/storage" }' -fjson
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "create_enabled": true, 
+   "highwater_ratio": 90.0, 
+   "description": "", 
+   "protocol_fields": {
+    "nfs_share": "/storage"
+   }, 
+   "reserved_virtual_space": -1, 
+   "over_commit_ratio": 1.0, 
+   "enabled": true, 
+   "total_physical_space": -1, 
+   "server": "/haStorageServerAutomation", 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/pool/oracle/storagePoolAutomation", 
+   "node_properties": [], 
+   "status_timestamp": "2014-05-16T03:01:26Z", 
+   "total_virtual_space": -1, 
+   "status_detail": "The storage pool is currently being initialized.", 
+   "available_physical_space": -1, 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto", 
+    "/oracle/public/storage/protocol/nfs"
+   ], 
+   "protocol_type": "nfs", 
+   "name": "/oracle/storagePoolAutomation"
+  }
+ ]
+}
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagepool /oracle/storagePoolAutomation -Fname,status |grep Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagepool /oracle/storagePoolAutomation -Fname,status |grep Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagepool /oracle/storagePoolAutomation -Fname,status |grep Online
+/oracle/storagePoolAutomation	Online
+[1;34m--------------------------Function create_storage_env end--------------------------------[0m
+[1;32mcreate_storage_env function running end![0m
+
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_0 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_1 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_2 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_3 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_4 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_5 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_6 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_7 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_8 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root add storagevolume /haAutoStorageVol_boot_9 8G /oracle/ha_storage_prop1_auto --tags volumeTag1 -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep Online
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_6", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "e6b6067d-f7f4-4ca2-bb2c-b335594bc0de__haAutoStorageVol_boot_6.raw", 
+    "volume_folder": "e6"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_6", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_3", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "6a4fa5b3-dd83-4905-b817-f599a7556b6e__haAutoStorageVol_boot_3.raw", 
+    "volume_folder": "6a"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_3", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_1", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "12dc7465-e48e-4d36-bd68-6d5a8ab49198__haAutoStorageVol_boot_1.raw", 
+    "volume_folder": "12"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_1", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_2", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "ea054bec-5c16-469a-93d1-a03796c8dc7c__haAutoStorageVol_boot_2.raw", 
+    "volume_folder": "ea"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_2", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_7", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "b1194cf6-3f6f-4f6a-b7f9-71eca8c8dbf8__haAutoStorageVol_boot_7.raw", 
+    "volume_folder": "b1"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_7", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_4", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "372d3057-5f2b-488a-a4f3-9a8fb90cfa7a__haAutoStorageVol_boot_4.raw", 
+    "volume_folder": "37"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_4", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_5", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "2902d5ad-13f4-444b-8a44-739e96f7a76c__haAutoStorageVol_boot_5.raw", 
+    "volume_folder": "29"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_5", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_8", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "2859f1b1-e6b4-41ca-ac29-35ec50c55896__haAutoStorageVol_boot_8.raw", 
+    "volume_folder": "28"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_8", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_9", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "ba482d90-1a31-447c-8c9d-37304d6767bd__haAutoStorageVol_boot_9.raw", 
+    "volume_folder": "ba"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_9", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+{
+ "list": [
+  {
+   "status": "Initializing", 
+   "account": "/root/default", 
+   "managed": true, 
+   "description": "", 
+   "name": "/haAutoStorageVol_boot_0", 
+   "tags": [
+    "volumeTag1"
+   ], 
+   "bootable": false, 
+   "hypervisor": null, 
+   "protocol_fields": {
+    "volume_filename": "3127eaea-f019-46eb-a45f-4be65c50ffab__haAutoStorageVol_boot_0.raw", 
+    "volume_folder": "31"
+   }, 
+   "quota": null, 
+   "uri": "https://api.scalability.nimbula/federation/nimbula/scalability/storage/volume/haAutoStorageVol_boot_0", 
+   "imagelist_entry": 1, 
+   "storage_pool": "/oracle/storagePoolAutomation", 
+   "status_timestamp": "2014-05-16T03:01:39Z", 
+   "imagelist": null, 
+   "status_detail": "The storage volume is currently being initialized.", 
+   "properties": [
+    "/oracle/ha_storage_prop1_auto"
+   ], 
+   "protocol_type": "nfs", 
+   "size": "8589934592"
+  }
+ ]
+}
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep Online
+/haAutoStorageVol_boot_0	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_1 -Fname,status |grep Online
+/haAutoStorageVol_boot_1	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_2 -Fname,status |grep Online
+/haAutoStorageVol_boot_2	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_3 -Fname,status |grep Online
+/haAutoStorageVol_boot_3	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_4 -Fname,status |grep Online
+/haAutoStorageVol_boot_4	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_5 -Fname,status |grep Online
+/haAutoStorageVol_boot_5	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_6 -Fname,status |grep Online
+/haAutoStorageVol_boot_6	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_7 -Fname,status |grep Online
+/haAutoStorageVol_boot_7	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_8 -Fname,status |grep Online
+/haAutoStorageVol_boot_8	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_9 -Fname,status |grep Online
+/haAutoStorageVol_boot_9	Online
+[1;33m20140515-230225 , Start to delete Boot storage_volume...[0m
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_0 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_1 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_2 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_3 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_4 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_5 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_6 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_7 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_8 --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagevolume /haAutoStorageVol_boot_9 --force
+[1;33m20140515-230225 , delete Boot storage_volume requests done ![0m
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep /haAutoStorageVol_boot_0
+
+[1;34m-------------------------Function /root/shell/cases/../py/getpid_kill_service.py start-------------------------------[0m
+[/root/shell/lib]#/root/shell/cases/../py/getpid_kill_service.py rabbitmq_1
+/haAutoStorageVol_boot_0	Online
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep /haAutoStorageVol_boot_0
+/haAutoStorageVol_boot_0	Deleting
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_0 -Fname,status |grep /haAutoStorageVol_boot_0
+Volume /haAutoStorageVol_boot_0 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_1 -Fname,status |grep /haAutoStorageVol_boot_1
+Volume /haAutoStorageVol_boot_1 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_2 -Fname,status |grep /haAutoStorageVol_boot_2
+Volume /haAutoStorageVol_boot_2 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_3 -Fname,status |grep /haAutoStorageVol_boot_3
+Volume /haAutoStorageVol_boot_3 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_4 -Fname,status |grep /haAutoStorageVol_boot_4
+Volume /haAutoStorageVol_boot_4 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_5 -Fname,status |grep /haAutoStorageVol_boot_5
+Volume /haAutoStorageVol_boot_5 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_6 -Fname,status |grep /haAutoStorageVol_boot_6
+Volume /haAutoStorageVol_boot_6 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_7 -Fname,status |grep /haAutoStorageVol_boot_7
+Volume /haAutoStorageVol_boot_7 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_8 -Fname,status |grep /haAutoStorageVol_boot_8
+Volume /haAutoStorageVol_boot_8 deleted successed!
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagevolume /haAutoStorageVol_boot_9 -Fname,status |grep /haAutoStorageVol_boot_9
+Volume /haAutoStorageVol_boot_9 deleted successed!
+
+[1;34m-------------------------Function clean_storage_env start-------------------------------[0m
+[/root/shell/lib]#clean_storage_env
+Will delete storagepool /oracle/storagePoolAutomation
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storagepool /oracle/storagePoolAutomation --force
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagepool /oracle/storagePoolAutomation -Fname,status |grep /oracle/storagePoolAutomation
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete property storage /oracle/ha_storage_prop1_auto
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storagepool /oracle/storagePoolAutomation -Fname,status | grep /oracle/ha_storage_prop1_auto
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root delete storageserver /haStorageServerAutomation -f json
+nimbula-api -a api.scalability.nimbula -u /root/root -p /tmp/nimbulaPasswdFile_root_root list storageserver /haStorageServerAutomation -Fname,status | grep /haStorageServerAutomation 
+[1;34m--------------------------Function clean_storage_env end--------------------------------[0m
+[1;32mclean_storage_env function running end![0m
+
+Node info : 192.6.64.14
+Get rabbit1 pid : 24532
+
+Before kill, rabbitmq_1 pid is [1;32m24532
+[0m
+Node info : 192.6.64.15
+Get rabbit1 pid : 24962
+
+Before killed : 192.6.64.14, 24532
+ 
+After killed : 192.6.64.15, 24962
+
+[1;34m--------------------------Function /root/shell/cases/../py/getpid_kill_service.py end--------------------------------[0m
+[1;32m/root/shell/cases/../py/getpid_kill_service.py function running end![0m
+
+###### Time Consume :
+real2m10.691s
+user0m11.049s
+sys0m1.571s
