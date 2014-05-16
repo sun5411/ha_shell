@@ -17,6 +17,7 @@ echo_yellow "$(date +%Y%m%d-%H%M%S) , Add Boot storage_volume requests done !"
 run $pypath/getpid_kill_service.py rabbitmq_1 &
 
 for ((i=0;i<10;i++));do
+    echo_yellow "$(date +%Y%m%d-%H%M%S) , checking volume ${stVolume}_boot_${i}"
     check_storage_volume_online ${stVolume}_boot_${i}
 done
 

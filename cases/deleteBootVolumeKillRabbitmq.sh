@@ -27,6 +27,7 @@ run $pypath/getpid_kill_service.py rabbitmq_1 &
 
 #check if bootVolumes are deleted
 for ((i=0;i<10;i++));do
+    echo_yellow "$(date +%Y%m%d-%H%M%S) checking volume ${stVolume}_boot_${i} status "
     check_storage_volume_delete_status ${stVolume}_boot_${i}
 done
 
