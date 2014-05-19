@@ -45,6 +45,9 @@ function set_env()
         nfs_share)
                 nfs_share=$VALUE
                 ;;
+        iscsi_share)
+                iscsi_project=$VALUE
+                ;;
         imagelist)
                 imagelist=$VALUE
                 ;;

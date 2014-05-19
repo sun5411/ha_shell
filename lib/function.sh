@@ -22,9 +22,18 @@ function create_storage_property()
     [ $? -eq 0 ] || echo_red "Create storage property failed !"
 }
 
+###############################
+# Use :
+# $0
+# $0 iscsi
+###############################
 function create_storage_server()
 {
-    cmd="$apiClient -a $api -u $user -p $passFile add storageserver $stServer $storage_address $storage_address nfs -f json"
+    if [[ "$1" = "iscsi" ]];then
+        cmd="$apiClient -a $api -u $user -p $passFile add storageserver $stServer $storage_address $storage_address iscsi -f json"
+    else
+        cmd="$apiClient -a $api -u $user -p $passFile add storageserver $stServer $storage_address $storage_address nfs -f json"
+    fi
     echo "$cmd"
     $cmd
     #[ $? -eq 0 ] || echo_red "Create storageserver failed !"; exit
@@ -32,8 +41,8 @@ function create_storage_server()
     check_cmd="$apiClient -a $api -u $user -p $passFile list storageserver $stServer -Fname,status"
     value=1
     while [[ $value -ne 0 ]];do
-            echo "$check_cmd"
-            $check_cmd
+            echo "$check_cmd |grep $stServer"
+            eval $check_cmd | grep $stServer
             value=$?
             sleep 3
     done
@@ -68,7 +77,11 @@ function delete_storage_server()
 
 function create_storage_pool()
 {
-    cmd="$apiClient -a $api -u $user -p $passFile add storagepool $stPool $stServer $stProperty \"nfs\" '{ \"nfs_share\":\"$nfs_share\" }' -fjson"
+    if [[ "$1" = "iscsi" ]];then
+        cmd="$apiClient -a $api -u $user -p $passFile add storagepool $stPool $stServer $stProperty \"iscsi\" '{ \"iscsi_project\":\"$iscsi_share\",\"username\":\"root\",\"password\":\"welcome1\",\"interfaces\":\"igb0\" }' -fjson"
+    else
+        cmd="$apiClient -a $api -u $user -p $passFile add storagepool $stPool $stServer $stProperty \"nfs\" '{ \"nfs_share\":\"$nfs_share\" }' -fjson"
+    fi
     echo "$cmd"
     eval $cmd
     #[ $? -eq 0 ] || echo_red "Create storagepool failed !"; exit
@@ -171,8 +184,8 @@ function delete_storage_pool()
 {
     cmd="$apiClient -a $api -u $user -p $passFile delete storagepool $stPool --force"
     echo "Will delete storagepool $stPool"
-    echo "$cmd"
-    eval $cmd
+    echo "$cmd |grep $stPool"
+    eval $cmd |grep $stPool
 
     check_cmd="$apiClient -a $api -u $user -p $passFile list storagepool $stPool -Fname,status"
     value=0
