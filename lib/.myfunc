@@ -1,0 +1,165 @@
+#!/bin/bash
+
+##### Parameter ####
+export NIMBULA_API="10.247.59.2"
+export passfile="$HOME/pass.txt"
+
+#use : auto_login_ssh passwd user@host
+auto_login_ssh () {
+     expect -c "set timeout -1;
+     spawn -noecho ssh -o StrictHostKeyChecking=no nimbulaadmin@$1 ${@:2};
+     expect *assword:*;
+     send -- OracleCloud9\r;
+     interact;";
+     }
+
+function list_st_pool()
+{
+	echo "nimbula-api -u /root/root -p $passfile list storagepool / $*"
+	nimbula-api -u /root/root -p $passfile list storagepool / $*
+}
+
+function list_st_server()
+{
+	echo "nimbula-api -u /root/root -p $passfile list storageserver / $*"
+	nimbula-api -u /root/root -p $passfile list storageserver / $*
+}
+
+function list_st_property()
+{
+	echo "nimbula-api -u /root/root -p $passfile list property storage / $*"
+	nimbula-api -u /root/root -p $passfile list property storage / $*
+}
+
+function list_st_volume()
+{
+	echo "nimbula-api -u /root/root -p $passfile list storagevolume / $*"
+	nimbula-api -u /root/root -p $passfile list storagevolume / $*
+}
+function list_st_attachment()
+{
+	echo "nimbula-api -u /root/root -p $passfile list storageattachment / $*"
+	nimbula-api -u /root/root -p $passfile list storageattachment / $*
+}
+
+function delete_st_server()
+{
+    stservers=`nimbula-api -u /root/root -p $passfile list storageserver / -Fname|grep -v name`
+
+    for stserver in $stservers;do
+        cmd="nimbula-api -u /root/root -p $passfile delete storageserver $stserver -f json"
+        echo "$delete_property_cmd"
+        echo "$cmd"
+        $cmd
+        check_cmd="nimbula-api -u /root/root -p $passfile list storageserver $stserver -Fname,status"
+        value=0
+        while [[ $value -eq 0 ]];do
+                echo "$check_cmd | grep $stserver "
+                eval $check_cmd | grep $stserver
+                value=$?
+                sleep 3
+        done
+    done
+}
+
+# Use : $0 volume_name
+function delete_st_volumes()
+{
+    volumes=`nimbula-api -u /root/root -p $passfile list storagevolume / -Fname |grep -v name`
+    for volume in $volumes;do
+        cmd="nimbula-api -u /root/root -p $passfile delete storagevolume $volume --force"
+        echo "$cmd"
+        $cmd &
+    done
+}
+
+#use $0 
+function delete_st_pool()
+{
+    stpools=`nimbula-api -u /root/root -p $passfile list storagepool / -Fname |grep -v name`
+    for pool in $stpools;do
+        cmd="nimbula-api -u /root/root -p $passfile delete storagepool $pool --force"
+        echo "Will delete storagepool $pool"
+        echo "$cmd"
+        eval $cmd
+
+        check_cmd="nimbula-api -u /root/root -p $passfile list storagepool $pool -Fname,status"
+        value=0
+        while [[ $value -eq 0 ]];do
+                echo "$check_cmd |grep $pool"
+                eval $check_cmd |grep $pool
+                value=$?
+                sleep 3
+        done
+    done 
+}
+
+
+##########
+# Operation for orchestration
+##########
+function list_orchestration()
+{
+	echo "nimbula-api -u /root/root -p $passfile list orchestration / $*"
+	nimbula-api -u /root/root -p $passfile list orchestration / $*
+}
+
+# $0 $orachestration_file
+function add_orchestration()
+{
+	echo "nimbula-api -u /root/root -p $passfile add orchestration $*"
+	nimbula-api -u /root/root -p $passfile add orchestration $*
+}
+
+# $0 $orachestration_file
+function stop_orchestration()
+{
+	echo "nimbula-api -u /root/root -p $passfile stop orchestration $*"
+	nimbula-api -u /root/root -p $passfile stop orchestration $*
+}
+
+# $0 $orachestration_file
+function start_orchestration()
+{
+	echo "nimbula-api -u /root/root -p $passfile start orchestration $*"
+	nimbula-api -u /root/root -p $passfile start orchestration $*
+}
+
+# $0 $orachestration_file
+function delete_orchestration()
+{
+	echo "nimbula-api -u /root/root -p $passfile delete orchestration $*"
+	nimbula-api -u /root/root -p $passfile delete orchestration $*
+}
+
+function delete_all_orchestration()
+{
+    orches=`list_orchestration -Fname,status|grep stopped|grep -v name |awk '{print $1}'`
+    if [ "$orches" != "" ];then 
+        for orch in $orches;do
+            delete_orchestration $orch
+        done
+    fi
+}
+
+function stop_all_orchestration()
+{
+    orches=`list_orchestration -Fname,status|grep -v stopped|grep -v name |awk '{print $1}'`
+    if [ "$orches" != "" ];then 
+        for orch in $orches;do
+            stop_orchestration $orch
+        done
+    fi
+}
+
+function nimbula_cmd_diy()
+{
+	echo "nimbula-api -u /root/root -p $passfile $*"
+	nimbula-api -u /root/root -p $passfile $*
+}
+
+function list_instance()
+{
+	echo "nimbula-api -u /root/root -p $passfile list instance / $*"
+	nimbula-api -u /root/root -p $passfile list instance / $*
+}
