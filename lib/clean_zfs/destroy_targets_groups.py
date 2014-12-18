@@ -4,6 +4,7 @@ import pdb
 import json
 import sys
 
+#zfs_server="slce39sn02.us.oracle.com"
 zfs_server="slce39sn01.us.oracle.com"
 port=22
 user="root"

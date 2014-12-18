@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#zfs_server="slce39sn02.us.oracle.com"
 zfs_server="slce39sn01.us.oracle.com"
 usr="root"
 passwd="welcome1"
@@ -18,7 +19,7 @@ spawn ssh $usr@$zfs_server
 expect {
     "Are you sure you want to continue connecting (yes/no)?" { send "yes\r" ; exp_continue }
     "assword:" { send "$passwd\r"; exp_continue }
-    "slce39sn01:>"         { send "$1\n exit\n" }
+    "slce39sn0*:>"         { send "$1\n exit\n" }
 }
 expect eof
 EOF
@@ -29,7 +30,7 @@ key="storagePoolAutomation"
 exec_on_zfs "$cmd1" |tee -a $log_dir/target_results
 exec_on_zfs "$cmd2" |tee -a $log_dir/group_results
 cat $log_dir/target_results|grep -A 3 $key |grep iqn > $log_dir/targets
-cat $log_dir/group_results |grep -A 3 $key |grep iqn > $log_dir/groups
+cat $log_dir/group_results |grep -A 3 $key |grep group|awk '{print $2}' > $log_dir/groups
 
 ####clean targets
 #while read string;do
