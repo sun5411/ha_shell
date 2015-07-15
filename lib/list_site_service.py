@@ -4,8 +4,11 @@ import pdb
 import json
 import sys
 
-#host="10.247.51.55"
-host="10.247.51.8"
+#host="10.247.51.59"
+#host="10.247.51.8"
+#host="10.247.51.3"
+#host="10.247.51.9"
+host="10.247.59.2"
 #host="192.6.80.11"
 #host=sys.argv[1]
 nodeport=18611

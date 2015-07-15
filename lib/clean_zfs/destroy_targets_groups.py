@@ -16,7 +16,7 @@ def inred(str):
     return"%s[1;31m%s%s[0m"%(chr(27), str, chr(27))
 
 targets_file = open("tmp/targets")
-groups_file = open("tmp/groups")
+#groups_file = open("tmp/groups")
 
 ssh=paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -33,12 +33,12 @@ while 1:
         print "%s%s\n" %(target_cmd,line)
         stdin,stdout,stderr = ssh.exec_command("%s%s\n" %(target_cmd,line))
 
-while 1:
-    lines = groups_file.readlines(255)
-    if not lines:
-        break
-    for line in lines:
-        print "###### Start to destory groups %s\n" %line
-        print "%s%s\n" %(group_cmd,line)
-        stdin,stdout,stderr = ssh.exec_command("%s%s\n" %(group_cmd,line))
-        print "%s\n" %(inred(stdout.read()))
+#while 1:
+#    lines = groups_file.readlines(255)
+#    if not lines:
+#        break
+#    for line in lines:
+#        print "###### Start to destory groups %s\n" %line
+#        print "%s%s\n" %(group_cmd,line)
+#        stdin,stdout,stderr = ssh.exec_command("%s%s\n" %(group_cmd,line))
+#        print "%s\n" %(inred(stdout.read()))

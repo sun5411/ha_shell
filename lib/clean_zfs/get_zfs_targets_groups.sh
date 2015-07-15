@@ -26,11 +26,14 @@ EOF
 }
 
 ### get the targets and groups
-key="storagePoolAutomation"
+#key="storagePoolAutomation"
+key="generalPool"
+#key="iscsiPool"
 exec_on_zfs "$cmd1" |tee -a $log_dir/target_results
-exec_on_zfs "$cmd2" |tee -a $log_dir/group_results
+#exec_on_zfs "$cmd2" |tee -a $log_dir/group_results
 cat $log_dir/target_results|grep -A 3 $key |grep iqn > $log_dir/targets
-cat $log_dir/group_results |grep -A 3 $key |grep group|awk '{print $2}' > $log_dir/groups
+#cat $log_dir/target_results|grep $key |awk '{print $1}' > $log_dir/targets
+#cat $log_dir/group_results |grep -A 3 $key |grep group|awk '{print $2}' > $log_dir/groups
 
 ####clean targets
 #while read string;do

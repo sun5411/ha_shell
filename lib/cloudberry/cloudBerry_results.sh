@@ -2,10 +2,14 @@
 date=`date +'%Y-%m-%d'`
 cases="./aaa"
 cloudberry_result="nimbulaCloudBerryResults.xml"
-release_version="14.1.14-20150105.223443-master"
+release_version="14.1.15-20150516.053643-release"
 component_name="HA-ComputeSvc"
-#subcommpont="hw.FailureResiliency"
-subcommpont="GreenTest"
+subcommpont="selfHealingControlPlanesSystemLoad.ioLoad.site"
+#subcommpont="serviceFailureResiliency"
+#subcommpont="GreenTest"
+#bug="OCC-7558"
+result="Automation Passed"
+#result="Failed"
 
 start_result()
 {
@@ -32,13 +36,13 @@ cat <<EOF >> $cloudberry_result
         <testcase_name>$case_name</testcase_name>
         <env_name>qa_virtualized</env_name>
         <release_name>$release_version</release_name>
-        <teststatus>Automation Passed</teststatus>
+        <teststatus>$result</teststatus>
         <TestDuration></TestDuration>
         <product_name>Compute Service</product_name>
         <component_name>$component_name</component_name>
         <subcomponent_name>$subcommpont</subcomponent_name>
         <run_date>$date</run_date>
-        <bug_number></bug_number>
+        <bug_number>$bug</bug_number>
         <comments>
         </comments>
     </testresult>

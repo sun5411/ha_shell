@@ -9,6 +9,20 @@ auto_login_ssh () {
    interact;";
 }
 
+########
+# $0 $server $port $action
+########
+ssh_node_action () {
+expect -f - <<EOF
+set timeout -1
+spawn ssh -o StrictHostKeyChecking=no nimbulaadmin@$1 -p $2;
+expect {
+	"assword:" { send "OracleCloud9\r"; exp_continue }
+    "*]$ "       { send "$3;exit\r"; exp_continue }
+}
+EOF
+}
+
 function create_storage_property()
 {
     cmd="$apiClient -a $api -u $user -p $passFile add property storage $stProperty automation_added_prop -f json"
