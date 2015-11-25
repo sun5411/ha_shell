@@ -2,9 +2,9 @@
 date=`date +'%Y-%m-%d'`
 cases="./aaa"
 cloudberry_result="nimbulaCloudBerryResults.xml"
-release_version="14.1.15-20150516.053643-release"
+release_version="14.1.16-20151106.040902-release"
 component_name="HA-ComputeSvc"
-subcommpont="selfHealingControlPlanesSystemLoad.ioLoad.site"
+subcommpont="serviceFailureResiliencyOneServiceFailure.storage"
 #subcommpont="serviceFailureResiliency"
 #subcommpont="GreenTest"
 #bug="OCC-7558"

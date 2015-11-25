@@ -15,7 +15,7 @@ group_cmd="confirm configuration san iscsi targets groups destroy "
 def inred(str):
     return"%s[1;31m%s%s[0m"%(chr(27), str, chr(27))
 
-targets_file = open("tmp/targets")
+#targets_file = open("tmp/targets")
 groups_file = open("tmp/groups")
 
 ssh=paramiko.SSHClient()

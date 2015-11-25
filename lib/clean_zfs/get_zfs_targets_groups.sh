@@ -29,7 +29,7 @@ EOF
 #key="storagePoolAutomation"
 key="generalPool"
 #key="iscsiPool"
-exec_on_zfs "$cmd1" |tee -a $log_dir/target_results
+$exec_on_zfs "$cmd1" |tee -a $log_dir/target_results
 exec_on_zfs "$cmd2" |tee -a $log_dir/group_results
 cat $log_dir/target_results|grep -A 3 $key |grep iqn > $log_dir/targets
 #cat $log_dir/target_results|grep $key |awk '{print $1}' > $log_dir/targets
