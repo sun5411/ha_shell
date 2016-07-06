@@ -1,0 +1,33 @@
+set number
+
+" editor settings
+set history=1000
+
+"search
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+
+syntax enable 
+filetype plugin on
+"filetype indent on
+filetype plugin indent on
+
+" eggcache vim
+nnoremap ; :
+:command W w
+:command WQ wq
+:command Wq wq
+:command Q q
+:command Qa qa
+:command QA qa
+
+let g:pydiction_location='~/.vim/bundle/pydiction/complete-dict' 
+
+
+
+" powerline
+set  rtp+=/home/sun/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
