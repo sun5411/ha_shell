@@ -10,25 +10,6 @@ mq_home="/home/work/alibaba-rocketmq/"
 
 ##########################
 # $0 $cmd
-# login redis server
-##########################
-set_redis()
-{
-echo $1
-expect -f - <<EOF
-set timeout -1
-spawn ssh -o StrictHostKeyChecking=no cache@$redis_server;
-expect {
-    "assword:" 			{ send "nbcache\r"; exp_continue }
-    "cache@localhost ~]$ "      { send "${set_redis} ${1} ${2} ${3}; exit\r"; exp_continue }
-	eof                     { send_user "eof" }
-}
-wait
-EOF
-}
-
-##########################
-# $0 $cmd
 # login to MQ server 
 ##########################
 set_redis()
