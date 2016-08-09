@@ -20,6 +20,12 @@ if [ x"$cids" = x ];then
 	echo "Haven't found any cids, please check your manager db!!!" >> $log
 	exit
 fi
+availableSize=`df -m ${curDir}/|grep /data0|awk '{print $4}'`
+dbSize=`du -s --block-size=1024k ${dataDir}|awk '{print $1}'`
+if [[ $availableSize -le $dbSize ]];then
+        echo "### Available disk space is not enough!!!"
+        exit
+fi
 
 which expect
 if [ $? -ne 0 ];then

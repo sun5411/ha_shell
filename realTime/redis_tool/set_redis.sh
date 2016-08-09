@@ -1,7 +1,8 @@
 #!/bin/bash
 
+time=`date +%Y%m%d`
 logDir="/home/cache/redis-3.2.1/tools/logs"
-log=$logDir/setRedis.log
+log=$logDir/setRedis_${time}.log
 r_cli="/home/cache/redis-3.2.1/src/redis-cli"
 db_lists="10.10.1.163,10.10.1.168,10.10.1.170,10.10.1.172,10.10.1.169"
 db_user="pyuser"
@@ -43,7 +44,7 @@ init_cid()
 ###########################################
 set_cid_hostIP()
 {
-	echo "start set_cid_hostIP ..." $log
+	echo "start set_cid_hostIP ..." >> $log
 	if [ $# -ne 2 ];then
 		echo "### parameters incorrect !!!" >> $log
 		exit
@@ -83,19 +84,26 @@ main()
 {
 	time=`date +%Y%m%d-%H%M%S`
 	echo "############# $time start to set redis... ##############" >> $log
-	$*
+	#$*
+	cids=`cat lists`
+	serverIP="10.10.1.169"
+	for cid in $cids;do
+	        init_cid $cid
+	        set_cid_hostIP $serverIP $cid
+	done
 	time=`date +%Y%m%d-%H%M%S`
 	echo "############# $time set redis done!!! ##############" >> $log
 }
 
-echo $*|grep -E 'init_cid|set_cid_hostIP'
-if [ $? -ne 0 ];then
-	echo "### Invalid usage , plese use 'init_cid | set_cid_hostIP' to set redis"
-	echo "Such as :"
-	echo "$0 init_cid 12345678"
-	echo "$0 set_cid_hostIP 192.168.1.1 12345678"
-elif [ $# -lt 2 ];then
-	echo "### Wrong parameter!"
-else 
-	main $*
-fi
+main
+#echo $*|grep -E 'init_cid|set_cid_hostIP'
+#if [ $? -ne 0 ];then
+#	echo "### Invalid usage , plese use 'init_cid | set_cid_hostIP' to set redis"
+#	echo "Such as :"
+#	echo "$0 init_cid 12345678"
+#	echo "$0 set_cid_hostIP 192.168.1.1 12345678"
+#elif [ $# -lt 2 ];then
+#	echo "### Wrong parameter!"
+#else 
+#	main $*
+#fi
